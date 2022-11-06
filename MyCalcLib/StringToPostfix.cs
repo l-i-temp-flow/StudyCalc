@@ -8,8 +8,8 @@ namespace MyCalc
 {
     class StringToPostfix : PostfixMather
     {
-        private Stack<char> Operators = new Stack<char>();
-        private static Dictionary<char, byte> OperationWeights = new()
+        private Stack<char> operators = new Stack<char>();
+        private static Dictionary<char, byte> operationWeights = new()
         {
             {'(', 0 },
             {'+', 1 },
@@ -33,26 +33,26 @@ namespace MyCalc
                 {
                     if (!string.IsNullOrEmpty(tempdigit))
                     {
-                        base.Expr.Add(tempdigit);
+                        base.expression.Add(tempdigit);
                         tempdigit = "";
                     }
-                    if (op[i] == '(') Operators.Push(op[i]);
+                    if (op[i] == '(') operators.Push(op[i]);
                     else if (op[i] == ')')
                     {
-                        while (Operators.Count > 0 && Operators.Peek() != '(') base.Expr.Add(Convert.ToString(Operators.Pop()));
-                        Operators.Pop();
+                        while (operators.Count > 0 && operators.Peek() != '(') base.expression.Add(Convert.ToString(operators.Pop()));
+                        operators.Pop();
                     }
                     else
                     {
                         char tempop = op[i];
                         if (tempop == '-' && (i == 0 || op[i - 1] == '(')) tempop = '~';
-                        while (Operators.Count > 0 && OperationWeights[Operators.Peek()] >= OperationWeights[tempop]) base.Expr.Add(Convert.ToString(Operators.Pop()));
-                        Operators.Push(tempop);
+                        while (operators.Count > 0 && operationWeights[operators.Peek()] >= operationWeights[tempop]) base.expression.Add(Convert.ToString(operators.Pop()));
+                        operators.Push(tempop);
                     }
                 }
             }
-            if (!string.IsNullOrEmpty(tempdigit)) base.Expr.Add(tempdigit);
-            while (Operators.Count > 0) base.Expr.Add(Convert.ToString(Operators.Pop()));
+            if (!string.IsNullOrEmpty(tempdigit)) base.expression.Add(tempdigit);
+            while (operators.Count > 0) base.expression.Add(Convert.ToString(operators.Pop()));
         }
     }
 }

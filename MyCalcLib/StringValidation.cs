@@ -48,25 +48,25 @@ namespace MyCalc
                 return;
             }
             ToPostfixList(TypeExpr);
-            Console.WriteLine($"Результат вычисления:\n{TypeExpr} = {GetResult():f5}");
+            Console.WriteLine($"Результат вычисления:\n{TypeExpr} = {GetResult()}");
         }
 
         //Checking the correct placement of brackets
         private bool CheckBrackets (string expr)
         {
-            Stack<char> Brackets = new();
+            Stack<char> brackets = new();
             int i = 0;
             foreach (char b in expr)
             {
                 if (b == '(')
                 {
-                    Brackets.Push(b);
+                    brackets.Push(b);
                     i++;
                 }
-                else if (b == ')' && Brackets.Count > 0) Brackets.Pop();
-                else if (b == ')' && Brackets.Count == 0) return false;
+                else if (b == ')' && brackets.Count > 0) brackets.Pop();
+                else if (b == ')' && brackets.Count == 0) return false;
             }
-            if (i > 0 && Brackets.Count > 0) return false;
+            if (i > 0 && brackets.Count > 0) return false;
             return true;
         }
     }

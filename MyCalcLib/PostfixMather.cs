@@ -7,7 +7,7 @@ namespace MyCalc
 {
     class PostfixMather
     {
-        internal List<string> Expr = new();
+        internal List<string> expression = new();
 
         public PostfixMather() {}
 
@@ -15,30 +15,30 @@ namespace MyCalc
         internal double GetResult()
         {
             double b2, a1 = 0;
-            for (int i = 0; i < Expr.Count; i++)
+            for (int i = 0; i < expression.Count; i++)
             {
-                if (!double.TryParse(Expr[i], out b2))
+                if (!double.TryParse(expression[i], out b2))
                 {
-                    if (Expr[i] == "~")
+                    if (expression[i] == "~")
                     {
                         i--;
-                        a1 = Convert.ToDouble(Expr[i]);
-                        a1 = DoMath(0, a1, Expr[i + 1]);
-                        Expr.RemoveRange(i, 2);
-                        Expr.Insert(i, $"{a1}");
+                        a1 = Convert.ToDouble(expression[i]);
+                        a1 = DoMath(0, a1, expression[i + 1]);
+                        expression.RemoveRange(i, 2);
+                        expression.Insert(i, $"{a1}");
                         i--;
                         continue;
                     }
                     i -= 2;
-                    a1 = Convert.ToDouble(Expr[i]);
-                    b2 = Convert.ToDouble(Expr[i + 1]);
-                    a1 = DoMath(a1, b2, Expr[i + 2]);
-                    Expr.RemoveRange(i, 3);
-                    Expr.Insert(i, $"{a1}");
+                    a1 = Convert.ToDouble(expression[i]);
+                    b2 = Convert.ToDouble(expression[i + 1]);
+                    a1 = DoMath(a1, b2, expression[i + 2]);
+                    expression.RemoveRange(i, 3);
+                    expression.Insert(i, $"{a1}");
                     i--;
                 }
             }
-            return Convert.ToDouble(Expr[0]);
+            return Convert.ToDouble(expression[0]);
         }
 
         //Execute method
