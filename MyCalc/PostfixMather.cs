@@ -19,7 +19,7 @@ namespace MyCalc
             {
                 if (!double.TryParse(Expr[i], out b2))
                 {
-                    if (i < 2)
+                    if (Expr[i] == "~")
                     {
                         i--;
                         a1 = Convert.ToDouble(Expr[i]);
@@ -38,7 +38,7 @@ namespace MyCalc
                     i--;
                 }
             }
-            return a1;
+            return Convert.ToDouble(Expr[0]);
         }
 
         //Execute method
@@ -49,7 +49,7 @@ namespace MyCalc
             "*" => a1 * b2,
             "/" => a1 / b2,
             "^" => Math.Pow(a1, b2),
-            "~" => a1 - b2,
+            "~" => 0 - b2,
             _ => 0
          };
     }

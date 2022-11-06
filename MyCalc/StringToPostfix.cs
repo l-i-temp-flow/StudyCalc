@@ -26,7 +26,6 @@ namespace MyCalc
         internal void ToPostfixList(string op)
         {
             string tempdigit = "";
-            char prev = ' ';
             for (int i = 0; i < op.Length; i++)
             {
                 if (char.IsDigit(op[i]) || op[i] == ',') tempdigit += op[i];
@@ -54,7 +53,6 @@ namespace MyCalc
             }
             if (!string.IsNullOrEmpty(tempdigit)) base.Expr.Add(tempdigit);
             while (Operators.Count > 0) base.Expr.Add(Convert.ToString(Operators.Pop()));
-
         }
     }
 }
