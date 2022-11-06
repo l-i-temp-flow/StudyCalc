@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace MyCalc
 {
-    class ConsoleUI
+    public class ConsoleUI
     {
-        internal ConsoleUI() { }
+        public ConsoleUI() { }
 
-        internal void DoUI()
+        public void DoUI()
         {
             Console.Title = "Calculator";
             bool check = true;

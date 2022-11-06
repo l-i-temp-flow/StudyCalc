@@ -48,7 +48,7 @@ namespace MyCalc
                 return;
             }
             ToPostfixList(TypeExpr);
-            Console.WriteLine($"Результат вычисления:\n{TypeExpr} = {GetResult()}");
+            Console.WriteLine($"Результат вычисления:\n{TypeExpr} = {GetResult():f5}");
         }
 
         //Checking the correct placement of brackets

@@ -9,7 +9,7 @@ namespace MyCalc
     class StringToPostfix : PostfixMather
     {
         private Stack<char> Operators = new Stack<char>();
-        private static Dictionary<char, byte> OpWeights = new()
+        private static Dictionary<char, byte> OperationWeights = new()
         {
             {'(', 0 },
             {'+', 1 },
@@ -46,7 +46,7 @@ namespace MyCalc
                     {
                         char tempop = op[i];
                         if (tempop == '-' && (i == 0 || op[i - 1] == '(')) tempop = '~';
-                        while (Operators.Count > 0 && OpWeights[Operators.Peek()] >= OpWeights[tempop]) base.Expr.Add(Convert.ToString(Operators.Pop()));
+                        while (Operators.Count > 0 && OperationWeights[Operators.Peek()] >= OperationWeights[tempop]) base.Expr.Add(Convert.ToString(Operators.Pop()));
                         Operators.Push(tempop);
                     }
                 }
