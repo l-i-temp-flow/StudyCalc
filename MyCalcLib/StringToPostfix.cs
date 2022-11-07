@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyCalc
 {
-    class StringToPostfix : PostfixMather
+    public class StringToPostfix : PostfixMather
     {
         private Stack<char> operators = new Stack<char>();
         private static Dictionary<char, byte> operationWeights = new()

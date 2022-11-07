@@ -7,17 +7,18 @@ using System.Threading.Tasks;
 
 namespace MyCalc
 {
-    internal class StringValidation : StringToPostfix
+    public class StringValidation : StringToPostfix
     {
         string TypeExpr { get; set; }
         string ErrorType;
         bool IsError;
+        private static string DivideByZero = @"/0?,?0*(\+|-|\*|/|\^).*$";
         private static string InvalidCharacters = @"[^\d|\+|\-|\*|/|\^|\(|\)|,]";
         private static string InvalidBracketsCont = @"\(\D*\)";
         private static string InvalidCourseAction = @"(\+|\-|\*|/|\^){2,}|(\((\+|\*|/|\^)+)";
         private static string InvalidDecSeparator = @"(\d+\,\D)|(\D\,\d+)";
 
-        internal StringValidation (string? typeExpr)
+        public StringValidation (string? typeExpr)
         {
             IsError = true;
             if (string.IsNullOrEmpty(typeExpr)) ErrorType = "Введена пустая строка";
@@ -25,7 +26,7 @@ namespace MyCalc
             {
                 typeExpr = typeExpr.Replace(" ", "");
                 typeExpr = typeExpr.Replace(".", ",");
-                if (typeExpr.Contains("/0") && !typeExpr.Contains("/0,")) ErrorType = "Деление на \"0\"";
+                if (Regex.IsMatch(typeExpr, DivideByZero)) ErrorType = "Деление на \"0\"";
                 else if (Regex.IsMatch(typeExpr, InvalidCharacters)) ErrorType = "Введены некорректные символы";
                 else if (Regex.IsMatch(typeExpr, InvalidBracketsCont)) ErrorType = "Некорретное содержимое скобок";
                 else if (Regex.IsMatch(typeExpr, InvalidCourseAction)) ErrorType = "Некорректный порядок симолов операций";
@@ -40,7 +41,7 @@ namespace MyCalc
         }
 
         //Output method
-        internal void PrintResult()
+        public void PrintResult()
         {
             if (IsError)
             {

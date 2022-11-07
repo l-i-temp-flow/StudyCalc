@@ -5,7 +5,7 @@ using System.Runtime.Intrinsics.X86;
 
 namespace MyCalc
 {
-    class PostfixMather
+    public class PostfixMather
     {
         internal List<string> expression = new();
 
