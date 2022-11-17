@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyCalcLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -7,11 +8,9 @@ using System.Threading.Tasks;
 
 namespace MyCalc
 {
-    internal struct ConsoleUI
+    internal static class ConsoleUI
     {
-        public ConsoleUI() { }
-
-        public void DoUI()
+        public static void DoUI()
         {
             Console.Title = "Calculator";
             bool check = true;
@@ -21,14 +20,13 @@ namespace MyCalc
                 Console.Clear();
                 Console.WriteLine("Доступные операции: +, -, *, /, ^.");
                 Console.Write("Введите выражение: ");
-                StringValidation currentString = new(Console.ReadLine());
-                currentString.PrintResult();
+                MyCalcWrapper.PrintResult(Console.ReadLine());
                 Console.CursorVisible = false;
                 check = Menu();
             }
         }
-
-        private bool Menu()
+        
+        private static bool Menu()
         {
             string[] menuItems = new string[] { "Повторить операцию", "      Выход       " };
             int row = Console.CursorTop;

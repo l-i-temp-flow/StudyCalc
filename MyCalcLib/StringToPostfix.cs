@@ -4,55 +4,55 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyCalc
+namespace MyCalcLib
 {
-    public class StringToPostfix : PostfixMather
+    internal static class StringToPostfix
     {
-        private Stack<char> operators = new Stack<char>();
+        private static Stack<char> operators = new();
         private static Dictionary<char, byte> operationWeights = new()
         {
             {'(', 0 },
             {'+', 1 },
-            {'-', 2 },
-            {'*', 3 },
-            {'/', 4 },
-            {'^', 5 },
-            {'~', 6 },
+            {'-', 1 },
+            {'*', 2 },
+            {'/', 2 },
+            {'^', 3 },
+            {'~', 4 },
         };
 
-        internal StringToPostfix() { }
-
         //Tokenize and transform to postfix
-        internal void ToPostfixList(string op)
+        internal static void ToPostfixList(string stringExpr, List<string> listExpr)
         {
-            string tempdigit = "";
-            for (int i = 0; i < op.Length; i++)
+            string tempDigit = "";
+            for (int i = 0; i < stringExpr.Length; i++)
             {
-                if (char.IsDigit(op[i]) || op[i] == ',') tempdigit += op[i];
+                if (char.IsDigit(stringExpr[i]) || stringExpr[i] == ',') tempDigit += stringExpr[i];
                 else
                 {
-                    if (!string.IsNullOrEmpty(tempdigit))
+                    if (!string.IsNullOrEmpty(tempDigit))
                     {
-                        base.expression.Add(tempdigit);
-                        tempdigit = "";
+                        listExpr.Add(tempDigit);
+                        tempDigit = "";
                     }
-                    if (op[i] == '(') operators.Push(op[i]);
-                    else if (op[i] == ')')
+                    if (stringExpr[i] == '(') operators.Push(stringExpr[i]);
+                    else if (stringExpr[i] == ')')
                     {
-                        while (operators.Count > 0 && operators.Peek() != '(') base.expression.Add(Convert.ToString(operators.Pop()));
+                        while (operators.Count > 0 && operators.Peek() != '(') listExpr.Add(Convert.ToString(operators.Pop()));
                         operators.Pop();
                     }
                     else
                     {
-                        char tempop = op[i];
-                        if (tempop == '-' && (i == 0 || op[i - 1] == '(')) tempop = '~';
-                        while (operators.Count > 0 && operationWeights[operators.Peek()] >= operationWeights[tempop]) base.expression.Add(Convert.ToString(operators.Pop()));
-                        operators.Push(tempop);
+                        char tempOperator = stringExpr[i];
+                        if (tempOperator == '-' && (i == 0 || (i > 1 && operationWeights.ContainsKey(stringExpr[i-1]))))
+                            tempOperator = '~';
+                        while (operators.Count > 0 && operationWeights[operators.Peek()] >= operationWeights[tempOperator])
+                            listExpr.Add(Convert.ToString(operators.Pop()));
+                        operators.Push(tempOperator);
                     }
                 }
             }
-            if (!string.IsNullOrEmpty(tempdigit)) base.expression.Add(tempdigit);
-            while (operators.Count > 0) base.expression.Add(Convert.ToString(operators.Pop()));
+            if (!string.IsNullOrEmpty(tempDigit)) listExpr.Add(tempDigit);
+            while (operators.Count > 0) listExpr.Add(Convert.ToString(operators.Pop()));
         }
     }
 }
